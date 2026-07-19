@@ -1,4 +1,4 @@
-import Students from '@/app/students/page';
+
 import pool from '@/db/db'
 import { NextResponse } from 'next/server'
 
