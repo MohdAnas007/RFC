@@ -21,12 +21,25 @@ const {register,handleSubmit,reset ,formState:{errors}}=useForm({resolver:zodRes
   const submitForm=async (data)=>{
     try{
       const res=await axios.post('/api/students',data);
-      setisRegistered(true);
-      setIsSubmit(true)
+      if(res.data && res.data.status==false){
+        setisRegistered(true);
+        setIsSubmit(false);
+      }
+      else{
+         setisRegistered(false);
+         setIsSubmit(true)
+      }
+      
     }
     catch(err){
-      setisErrorWhileSubmitting(true);
-      console.log("Error while submitting",err.message);
+      if(err.response && err.response.status===400){
+        setisRegistered(true);
+        setIsSubmit(false);
+
+      }else {
+        setisErrorWhileSubmitting(true);
+        console.log("Error while submitting", err.message);
+      }
     }
   }
   const inputStyle = "w-full px-4 py-2.5 text-sm rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 text-zinc-900 placeholder:text-zinc-400 transition-all";

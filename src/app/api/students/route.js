@@ -43,22 +43,24 @@ export async function POST(req) {
         if(!created){
             console.log("already registered");
             return NextResponse.json({
+                status:false,
                 message:"Student is already registered",
             });
         }
 
         return NextResponse.json({
-
+            status:true,
             message:"Student Registered successfully",
-            data:res.rows[0],
+            data:student
         });
 
     }
     catch(err){
         console.error("Error processing req\n",err.message);
         return NextResponse.json({
+                status:false,
                 message:"Invalid Request",
-        })
+        },{status:500})
     }
     
 }
