@@ -11,8 +11,10 @@ export default  function Students() {
         const getStudents=async ()=>{
 
             try{
-                const data=await axios.get(`/api/students`);
-                setStudents(data.data.stuent_data);
+                const result=await axios.get(`/api/students`);
+                const users=result.data.data
+
+                setStudents(users);
                 setLoading(false);
 
             }
@@ -76,7 +78,6 @@ export default  function Students() {
 
                 {/* Students Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 pt-8">
-                    {/* Safe mapping: Checks if students exists and has a length greater than 0 */}
                     {students?.length > 0 ? (
                         students.map((student) => (
                             <div 
@@ -89,22 +90,22 @@ export default  function Students() {
                                 {/* Avatar */}
                                 <div className="relative h-16 w-16 shrink-0 rounded-2xl bg-zinc-100 border border-zinc-200 flex items-center justify-center group-hover:bg-amber-500 transition-colors duration-300">
                                     <span className="text-2xl font-black text-zinc-400 group-hover:text-white transition-colors">
-                                        {student.Name ? student.Name.charAt(0).toUpperCase() : "?"}
+                                        {student.name ? student.name.charAt(0).toUpperCase() : "?"}
                                     </span>
                                 </div>
 
                                 {/* Student Details */}
                                 <div className="relative z-10 flex flex-col gap-1">
                                     <h2 className="text-lg font-bold text-zinc-900 group-hover:text-amber-700 transition-colors">
-                                        {student.Name || "Unknown Student"}
+                                        {student.name || "Unknown Student"}
                                     </h2>
                                     <div className="flex flex-wrap gap-2 mt-1">
                                         <span className="text-[10px] font-bold uppercase tracking-widest text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-100">
-                                            Grade {student.Class || "N/A"}
+                                            Grade {student.class || "N/A"}
                                         </span>
                                     </div>
                                     <p className="text-xs text-zinc-400 mt-2 font-medium italic">
-                                        {student.School || "No school provided"}
+                                        {student.school || "No school provided"}
                                     </p>
                                 </div>
                             </div>
